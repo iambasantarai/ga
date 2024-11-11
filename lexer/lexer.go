@@ -1,8 +1,10 @@
-package main
+package lexer
 
 import (
 	"unicode"
 	"unicode/utf8"
+
+	"github.com/iambasantarai/ga/token"
 )
 
 type Lexer struct {
@@ -28,49 +30,49 @@ func (l *Lexer) readChar() {
 	}
 }
 
-func (l *Lexer) NextToken() Token {
+func (l *Lexer) NextToken() token.Token {
 	l.skipWhitespace()
 
-	var tok Token
+	var tok token.Token
 
 	switch l.ch {
 	case '=':
-		tok = newToken(ASSIGN, l.ch)
+		tok = newToken(token.ASSIGN, l.ch)
 	case '+':
-		tok = newToken(PLUS, l.ch)
+		tok = newToken(token.PLUS, l.ch)
 	case '-':
-		tok = newToken(MINUS, l.ch)
+		tok = newToken(token.MINUS, l.ch)
 	case '*':
-		tok = newToken(ASTERISK, l.ch)
+		tok = newToken(token.ASTERISK, l.ch)
 	case '/':
-		tok = newToken(SLASH, l.ch)
+		tok = newToken(token.SLASH, l.ch)
 	case '!':
-		tok = newToken(BANG, l.ch)
+		tok = newToken(token.BANG, l.ch)
 	case ',':
-		tok = newToken(COMMA, l.ch)
+		tok = newToken(token.COMMA, l.ch)
 	case ';':
-		tok = newToken(SEMICOLON, l.ch)
+		tok = newToken(token.SEMICOLON, l.ch)
 	case '(':
-		tok = newToken(LPAREN, l.ch)
+		tok = newToken(token.LPAREN, l.ch)
 	case ')':
-		tok = newToken(RPAREN, l.ch)
+		tok = newToken(token.RPAREN, l.ch)
 	case '{':
-		tok = newToken(LBRACE, l.ch)
+		tok = newToken(token.LBRACE, l.ch)
 	case '}':
-		tok = newToken(RBRACE, l.ch)
+		tok = newToken(token.RBRACE, l.ch)
 	case 0:
-		tok = newToken(EOF, l.ch)
+		tok = newToken(token.EOF, l.ch)
 	default:
 		if isDevanagariLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
-			tok.Type = LookupIdent(tok.Literal)
+			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
 		} else if isDigit(l.ch) {
-			tok.Type = INT
+			tok.Type = token.INT
 			tok.Literal = l.readNumber()
 			return tok
 		} else {
-			tok = newToken(ILLEGAL, l.ch)
+			tok = newToken(token.ILLEGAL, l.ch)
 		}
 	}
 
@@ -78,8 +80,8 @@ func (l *Lexer) NextToken() Token {
 	return tok
 }
 
-func newToken(tokenType TokenType, ch rune) Token {
-	return Token{Type: tokenType, Literal: string(ch)}
+func newToken(tokenType token.TokenType, ch rune) token.Token {
+	return token.Token{Type: tokenType, Literal: string(ch)}
 }
 
 func (l *Lexer) skipWhitespace() {
