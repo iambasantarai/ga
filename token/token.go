@@ -16,10 +16,10 @@ const (
 	COMMA     = ","
 	SEMICOLON = ";"
 
-	LPAREN = "("
-	RPAREN = ")"
-	LBRACE = "{"
-	RBRACE = "}"
+	OPAREN = "("
+	CPAREN = ")"
+	OCURLY = "{"
+	CCURLY = "}"
 
 	// Operators
 	ASSIGN   = "="
