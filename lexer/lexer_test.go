@@ -7,24 +7,29 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	input := `,;(){}=+-*/!`
+	input := `पूर्णांक मुख्य() {
+	       प्रदर्शन("सोच्छौ के मेरो बारे?")।
+	       फिर्ता 0।
+	   }`
 
 	tests := []struct {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
-		{token.COMMA, ","},
-		{token.SEMICOLON, ";"},
+		{token.INT, "पूर्णांक"},
+		{token.MAIN, "मुख्य"},
 		{token.LPAREN, "("},
 		{token.RPAREN, ")"},
 		{token.LBRACE, "{"},
+		{token.PRINT, "प्रदर्शन"},
+		{token.LPAREN, "("},
+		{token.STRING_LITERAL, "सोच्छौ के मेरो बारे?"},
+		{token.RPAREN, ")"},
+		{token.TERMINATOR, "।"},
+		{token.RETURN, "फिर्ता"},
+		{token.INT, "0"},
+		{token.TERMINATOR, "।"},
 		{token.RBRACE, "}"},
-		{token.ASSIGN, "="},
-		{token.PLUS, "+"},
-		{token.MINUS, "-"},
-		{token.ASTERISK, "*"},
-		{token.SLASH, "/"},
-		{token.BANG, "!"},
 		{token.EOF, ""},
 	}
 

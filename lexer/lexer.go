@@ -60,6 +60,9 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.LBRACE, l.ch)
 	case '}':
 		tok = newToken(token.RBRACE, l.ch)
+	case '"':
+		tok.Type = token.STRING_LITERAL
+		tok.Literal = l.readStringLiteral()
 	case 0:
 		tok.Literal = ""
 		tok.Type = token.EOF
@@ -109,6 +112,17 @@ func (l *Lexer) readNumber() string {
 
 func isDigit(ch rune) bool {
 	return unicode.IsDigit(ch)
+}
+
+func (l *Lexer) readStringLiteral() string {
+	position := l.position + 1
+	for {
+		l.readChar()
+		if l.ch == '"' || l.ch == 0 {
+			break
+		}
+	}
+	return l.input[position:l.position]
 }
 
 // Devanagari characters live in the U+0900 to U+097F block

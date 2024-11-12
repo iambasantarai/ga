@@ -8,8 +8,9 @@ type Token struct {
 }
 
 const (
-	ILLEGAL = "ILLEGAL"
-	EOF     = "EOF"
+	EOF        = "EOF"
+	ILLEGAL    = "ILLEGAL"
+	TERMINATOR = "TERMINATOR"
 
 	// Delimiters
 	COMMA     = ","
@@ -29,21 +30,23 @@ const (
 	BANG     = "!"
 
 	// Keywords
-	MAIN     = "MAIN"
-	FUNCTION = "FUNCTIOn"
-	RETURN   = "RETURN"
+	MAIN   = "MAIN"
+	RETURN = "RETURN"
+	PRINT  = "PRINT"
 
 	// Identifiers
-	IDENT = "IDENT"
-	INT   = "INT"
+	INT            = "INT"
+	IDENT          = "IDENT"
+	STRING_LITERAL = "STRING_LITERAL"
 )
 
 var keywords = map[string]TokenType{
 	"पूर्णांक": INT,
 
-	"मुख्य":  MAIN,
-	"कार्य":  FUNCTION,
-	"फिर्ता": RETURN,
+	"मुख्य":    MAIN,
+	"प्रदर्शन": PRINT,
+	"फिर्ता":   RETURN,
+	"।":        TERMINATOR,
 }
 
 func LookupIdent(ident string) TokenType {
