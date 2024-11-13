@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/iambasantarai/ga/lexer"
 	"github.com/iambasantarai/ga/token"
@@ -10,7 +11,15 @@ import (
 
 func main() {
 	cliArgs := os.Args
+	if len(cliArgs) < 2 {
+		panic("Not enough arguments.")
+	}
+
 	sourceFilePath := cliArgs[1]
+	fileExtension := filepath.Ext(sourceFilePath)
+	if fileExtension != ".ga" {
+		panic("Unrecognized file type. File must have '.ga' extension.")
+	}
 
 	sourceCode, err := os.ReadFile(sourceFilePath)
 	if err != nil {
