@@ -10,21 +10,16 @@ import (
 
 func main() {
 	cliArgs := os.Args
-	command := cliArgs[1]
-	sourceFilePath := cliArgs[2]
+	sourceFilePath := cliArgs[1]
 
-	if command == "ga" {
-		sourceCode, err := os.ReadFile(sourceFilePath)
-		if err != nil {
-			panic(err)
-		}
+	sourceCode, err := os.ReadFile(sourceFilePath)
+	if err != nil {
+		panic(err)
+	}
 
-		lexer := lexer.New(string(sourceCode))
+	lexer := lexer.New(string(sourceCode))
 
-		for tok := lexer.NextToken(); tok.Type != token.EOF; tok = lexer.NextToken() {
-			fmt.Printf("TokenType: %s, Literal=%q\n", tok.Type, tok.Literal)
-		}
-	} else {
-		fmt.Println("Unrecognized command.")
+	for tok := lexer.NextToken(); tok.Type != token.EOF; tok = lexer.NextToken() {
+		fmt.Printf("TokenType: %s, Literal=%q\n", tok.Type, tok.Literal)
 	}
 }
