@@ -68,12 +68,12 @@ func (l *Lexer) NextToken() token.Token {
 		tok.Type = token.EOF
 	default:
 		if isDevanagariLetter(l.ch) {
-			tok.Literal = l.readIdentifier()
+			tok.Literal = l.readKeywordOrIdentifier()
 			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
 		} else if isDigit(l.ch) {
 			tok.Type = token.INT
-			tok.Literal = l.readNumber()
+			tok.Literal = l.readNumericLiteral()
 			return tok
 		} else {
 			tok = newToken(token.ILLEGAL, l.ch)
@@ -94,7 +94,7 @@ func (l *Lexer) skipWhitespace() {
 	}
 }
 
-func (l *Lexer) readIdentifier() string {
+func (l *Lexer) readKeywordOrIdentifier() string {
 	position := l.position
 	for isDevanagariLetter(l.ch) {
 		l.readChar()
@@ -102,7 +102,7 @@ func (l *Lexer) readIdentifier() string {
 	return l.input[position:l.position]
 }
 
-func (l *Lexer) readNumber() string {
+func (l *Lexer) readNumericLiteral() string {
 	position := l.position
 	for isDigit(l.ch) {
 		l.readChar()
