@@ -30,23 +30,39 @@ const (
 	BANG     = "!"
 
 	// Keywords
+	VOID   = "VOID"
 	MAIN   = "MAIN"
 	RETURN = "RETURN"
 	PRINT  = "PRINT"
+	IF     = "IF"
+	ELSE   = "ELSE"
+	BREAK  = "BREAK"
+
+	// Types
+	INT   = "INT"
+	FLOAT = "FLOAT"
+	CHAR  = "CHAR"
 
 	// Identifiers
-	INT            = "INT"
-	IDENT          = "IDENT"
+	IDENT = "IDENT"
+
 	STRING_LITERAL = "STRING_LITERAL"
 )
 
 var keywords = map[string]TokenType{
 	"पूर्णांक": INT,
+	"दशमलव":    FLOAT,
+	"अक्षर":    CHAR,
 
 	"मुख्य":    MAIN,
+	"शून्य":    VOID,
 	"प्रदर्शन": PRINT,
 	"फिर्ता":   RETURN,
-	"।":        TERMINATOR,
+	"यदि":      IF,
+	"अन्यथा":   ELSE,
+	"रोक":      BREAK,
+
+	"।": TERMINATOR,
 }
 
 func LookupIdent(ident string) TokenType {
