@@ -9,7 +9,7 @@ import (
 
 func TestNextToken(t *testing.T) {
 	t.Run("test keyword tokens", func(t *testing.T) {
-		input := `पूर्णांक दशमलव अक्षर मुख्य शून्य प्रदर्शन फिर्ता यदि अन्यथा रोक सही गलत `
+		input := `पूर्णांक दशमलव अक्षर मुख्य शून्य छाप फिर्ता यदि अन्यथा रोक सही गलत `
 
 		tests := []struct {
 			expectedType    token.TokenType
@@ -20,7 +20,7 @@ func TestNextToken(t *testing.T) {
 			{token.CHAR, "अक्षर"},
 			{token.MAIN, "मुख्य"},
 			{token.VOID, "शून्य"},
-			{token.PRINT, "प्रदर्शन"},
+			{token.PRINT, "छाप"},
 			{token.RETURN, "फिर्ता"},
 			{token.IF, "यदि"},
 			{token.ELSE, "अन्यथा"},
@@ -57,7 +57,7 @@ func TestNextToken(t *testing.T) {
 
 	t.Run("test a portion of source code", func(t *testing.T) {
 		input := `पूर्णांक मुख्य() {
-            प्रदर्शन("सोच्छौ के मेरो बारे?")।
+            छाप("सोच्छौ के मेरो बारे?")।
             फिर्ता 0।
         }`
 
@@ -70,7 +70,7 @@ func TestNextToken(t *testing.T) {
 			{token.OPAREN, "("},
 			{token.CPAREN, ")"},
 			{token.OCURLY, "{"},
-			{token.PRINT, "प्रदर्शन"},
+			{token.PRINT, "छाप"},
 			{token.OPAREN, "("},
 			{token.STRING_LITERAL, "सोच्छौ के मेरो बारे?"},
 			{token.CPAREN, ")"},
