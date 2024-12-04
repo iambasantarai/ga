@@ -37,6 +37,8 @@ const (
 	IF     = "IF"
 	ELSE   = "ELSE"
 	BREAK  = "BREAK"
+	TRUE   = "TRUE"
+	FALSE  = "FALSE"
 
 	// Types
 	INT   = "INT"
@@ -61,6 +63,8 @@ var keywords = map[string]TokenType{
 	"यदि":      IF,
 	"अन्यथा":   ELSE,
 	"रोक":      BREAK,
+	"सही":      TRUE,
+	"गलत":      FALSE,
 
 	"।": TERMINATOR,
 }
