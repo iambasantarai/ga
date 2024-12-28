@@ -3,4 +3,4 @@ build:
 test: build
 	go test ./... -count=1
 example: build
-	./bin/ga ./example.ga
+	./bin/ga ./examples/example.ga
