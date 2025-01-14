@@ -8,9 +8,9 @@ type Token struct {
 }
 
 const (
-	EOF        = "EOF"
-	ILLEGAL    = "ILLEGAL"
-	TERMINATOR = "TERMINATOR"
+	EOF       = "EOF"
+	ILLEGAL   = "ILLEGAL"
+	DELIMITER = "DELIMITER"
 
 	// Delimiters
 	COMMA     = ","
@@ -23,27 +23,30 @@ const (
 
 	// Operators
 	ASSIGN   = "="
-	PLUS     = "+"
-	MINUS    = "-"
 	ASTERISK = "*"
-	SLASH    = "/"
 	BANG     = "!"
+	MINUS    = "-"
+	PLUS     = "+"
+	SLASH    = "/"
 
 	// Keywords
-	VOID   = "VOID"
-	MAIN   = "MAIN"
-	RETURN = "RETURN"
-	PRINT  = "PRINT"
-	IF     = "IF"
-	ELSE   = "ELSE"
 	BREAK  = "BREAK"
-	TRUE   = "TRUE"
-	FALSE  = "FALSE"
+	ELSE   = "ELSE"
+	FUNC   = "FUNC"
+	IF     = "IF"
+	LET    = "LET"
+	PRINT  = "PRINT"
+	RETURN = "RETURN"
 
 	// Types
-	INT   = "INT"
-	FLOAT = "FLOAT"
-	CHAR  = "CHAR"
+	BOOL = "BOOL"
+	CHAR = "CHAR"
+	INT  = "INT"
+
+	// Loops
+	DO    = "DO"
+	FOR   = "FOR"
+	WHILE = "WHILE"
 
 	// Identifiers
 	IDENT = "IDENT"
@@ -52,21 +55,27 @@ const (
 )
 
 var keywords = map[string]TokenType{
-	"पूर्णांक": INT,
-	"दशमलव":    FLOAT,
-	"अक्षर":    CHAR,
+	"मानौं": LET,
 
-	"मुख्य":  MAIN,
-	"शून्य":  VOID,
-	"छाप":    PRINT,
+	"संख्या":    INT,
+	"अक्षर":     CHAR,
+	"सत्यअसत्य": BOOL,
+
+	"छाप": PRINT,
+
+	"कार्य":  FUNC,
 	"फिर्ता": RETURN,
-	"यदि":    IF,
-	"अन्यथा": ELSE,
-	"रोक":    BREAK,
-	"सही":    TRUE,
-	"गलत":    FALSE,
 
-	"।": TERMINATOR,
+	"गर":     DO,
+	"जबसम्म": WHILE,
+	"चक्र":   FOR,
+
+	"यदि":  IF,
+	"अथवा": ELSE,
+
+	"रोक": BREAK,
+
+	"।": DELIMITER,
 }
 
 func LookupIdent(ident string) TokenType {
