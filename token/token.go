@@ -8,74 +8,91 @@ type Token struct {
 }
 
 const (
-	EOF       = "EOF"
-	ILLEGAL   = "ILLEGAL"
+	// Special tokens
+	EOF     = "EOF"
+	ILLEGAL = "ILLEGAL"
+
+	// Statement terminator
 	DELIMITER = "DELIMITER"
 
 	// Delimiters
 	COMMA     = ","
 	SEMICOLON = ";"
-
-	OPAREN = "("
-	CPAREN = ")"
-	OCURLY = "{"
-	CCURLY = "}"
+	OPAREN    = "("
+	CPAREN    = ")"
+	OCURLY    = "{"
+	CCURLY    = "}"
 
 	// Operators
 	ASSIGN   = "="
-	ASTERISK = "*"
-	BANG     = "!"
-	MINUS    = "-"
 	PLUS     = "+"
+	MINUS    = "-"
+	ASTERISK = "*"
 	SLASH    = "/"
+	MODULO   = "%"
+	BANG     = "!"
+
+	// Comparison Operators
+	EQ     = "=="
+	NOT_EQ = "!="
+	LT     = "<"
+	GT     = ">"
+	LT_EQ  = "<="
+	GT_EQ  = ">="
+
+	// Logical Operators
+	AND = "र"
+	OR  = "वा"
 
 	// Keywords
-	BREAK  = "BREAK"
-	ELSE   = "ELSE"
-	FUNC   = "FUNC"
-	IF     = "IF"
 	LET    = "LET"
-	PRINT  = "PRINT"
+	FUNC   = "FUNC"
 	RETURN = "RETURN"
+	IF     = "IF"
+	ELSE   = "ELSE"
+	FOR    = "FOR"
+	WHILE  = "WHILE"
+	DO     = "DO"
+	BREAK  = "BREAK"
+	PRINT  = "PRINT"
 
-	// Types
-	BOOL = "BOOL"
-	CHAR = "CHAR"
-	INT  = "INT"
+	// Data Types
+	INT   = "INT"
+	FLOAT = "FLOAT"
+	CHAR  = "CHAR"
+	BOOL  = "BOOL"
 
-	// Loops
-	DO    = "DO"
-	FOR   = "FOR"
-	WHILE = "WHILE"
+	// Boolean values
+	TRUE  = "TRUE"
+	FALSE = "FALSE"
 
-	// Identifiers
-	IDENT = "IDENT"
-
+	// Identifiers and literals
+	IDENT          = "IDENT"
+	INT_LITERAL    = "INT_LITERAL"
+	FLOAT_LITERAL  = "FLOAT_LITERAL"
 	STRING_LITERAL = "STRING_LITERAL"
 )
 
 var keywords = map[string]TokenType{
-	"मानौं": LET,
-
+	"मानौं":     LET,
+	"कार्य":     FUNC,
+	"फिर्ता":    RETURN,
+	"यदि":       IF,
+	"अथवा":      ELSE,
+	"चक्र":      FOR,
+	"जबसम्म":    WHILE,
+	"गर":        DO,
+	"रोक":       BREAK,
+	"छाप":       PRINT,
 	"संख्या":    INT,
+	"दशमलव":     FLOAT,
 	"अक्षर":     CHAR,
 	"सत्यअसत्य": BOOL,
-
-	"छाप": PRINT,
-
-	"कार्य":  FUNC,
-	"फिर्ता": RETURN,
-
-	"गर":     DO,
-	"जबसम्म": WHILE,
-	"चक्र":   FOR,
-
-	"यदि":  IF,
-	"अथवा": ELSE,
-
-	"रोक": BREAK,
-
-	"।": DELIMITER,
+	"सत्य":      TRUE,
+	"असत्य":     FALSE,
+	"र":         AND,
+	"वा":        OR,
+	"।":         DELIMITER,
 }
 
 func LookupIdent(ident string) TokenType {
