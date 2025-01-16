@@ -5,6 +5,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/iambasantarai/ga/token"
+	"github.com/iambasantarai/ga/utils"
 )
 
 type Lexer struct {
@@ -67,7 +68,7 @@ func (l *Lexer) NextToken() token.Token {
 		tok.Literal = ""
 		tok.Type = token.EOF
 	default:
-		if isDevanagariLetter(l.ch) {
+		if utils.IsDevanagariCharacter(l.ch) {
 			tok.Literal = l.readKeywordOrIdentifier()
 			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
@@ -96,7 +97,7 @@ func (l *Lexer) skipWhitespace() {
 
 func (l *Lexer) readKeywordOrIdentifier() string {
 	position := l.position
-	for isDevanagariLetter(l.ch) {
+	for utils.IsDevanagariCharacter(l.ch) {
 		l.readChar()
 	}
 	return l.input[position:l.position]
@@ -123,9 +124,4 @@ func (l *Lexer) readStringLiteral() string {
 		}
 	}
 	return l.input[position:l.position]
-}
-
-// Devanagari characters live in the U+0900 to U+097F block
-func isDevanagariLetter(ch rune) bool {
-	return ch >= '\u0900' && ch <= '\u097F'
 }
