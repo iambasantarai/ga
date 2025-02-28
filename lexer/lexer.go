@@ -71,15 +71,13 @@ func (l *Lexer) NextToken() token.Token {
 		tok.Literal = ""
 		tok.Type = token.ANTYA
 	default:
-		if isDevanagariLetter(l.character) {
-			tok.Literal = l.readKeywordOrIdentifier()
-			tok.Type = token.LookupIdent(tok.Literal)
-
-			return tok
-		} else if isDigit(l.character) {
+		if isDevanagariDigit(l.character) {
 			tok.Type = token.ANK
 			tok.Literal = l.readNumericLiteral()
-
+			return tok
+		} else if isDevanagariLetter(l.character) {
+			tok.Literal = l.readKeywordOrIdentifier()
+			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
 		} else {
 			tok = newToken(token.ABAIDHA, l.character)
@@ -87,7 +85,6 @@ func (l *Lexer) NextToken() token.Token {
 	}
 
 	l.readChar()
-
 	return tok
 }
 
@@ -102,11 +99,11 @@ func (l *Lexer) skipWhitespace() {
 }
 
 func isDevanagariLetter(character rune) bool {
-	/*
-		Devanagari characters live in the U+0900 to U+097F block
-		return character >= '\u0900' && character <= '\u097F'
-	*/
 	return unicode.Is(unicode.Devanagari, character)
+}
+
+func isDevanagariDigit(character rune) bool {
+	return character >= '\u0966' && character <= '\u096F'
 }
 
 func (l *Lexer) readKeywordOrIdentifier() string {
@@ -114,7 +111,6 @@ func (l *Lexer) readKeywordOrIdentifier() string {
 	for isDevanagariLetter(l.character) {
 		l.readChar()
 	}
-
 	return l.input[position:l.position]
 }
 
@@ -126,19 +122,13 @@ func (l *Lexer) readStringLiteral() string {
 			break
 		}
 	}
-
 	return l.input[position:l.position]
-}
-
-func isDigit(character rune) bool {
-	return unicode.IsDigit(character)
 }
 
 func (l *Lexer) readNumericLiteral() string {
 	position := l.position
-	for isDigit(l.character) {
+	for isDevanagariDigit(l.character) {
 		l.readChar()
 	}
-
 	return l.input[position:l.position]
 }

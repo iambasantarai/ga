@@ -24,7 +24,7 @@ func TestNextToken(t *testing.T) {
 			{token.MAANAU, "मानौ"},
 			{token.IDENT, "संख्या"},
 			{token.BARAABAR, "="},
-			{token.IDENT, "५२"},
+			{token.ANK, "५२"},
 			{token.PURNA_BIRAAM, "।"},
 			{token.CHAAPA, "छाप"},
 			{token.KHULLAA_SAANO_KOSHTHAK, "("},
