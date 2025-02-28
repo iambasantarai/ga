@@ -1,14 +1,14 @@
 package lexer
 
 import (
-	"testing"
-
 	"ga/token"
+	"testing"
 )
 
 func TestNextToken(t *testing.T) {
 	t.Run("test a portion of source code", func(t *testing.T) {
 		input := `कार्य मुख्य() {
+            मानौ संख्या = ५२।
             छाप("सोच्छौ के मेरो बारे?")।
         }`
 
@@ -21,6 +21,11 @@ func TestNextToken(t *testing.T) {
 			{token.KHULLAA_SAANO_KOSHTHAK, "("},
 			{token.BANDA_SAANO_KOSHTHAK, ")"},
 			{token.KHULLAA_MADHYAM_KOSHTHAK, "{"},
+			{token.MAANAU, "मानौ"},
+			{token.IDENT, "संख्या"},
+			{token.BARAABAR, "="},
+			{token.IDENT, "५२"},
+			{token.PURNA_BIRAAM, "।"},
 			{token.CHAAPA, "छाप"},
 			{token.KHULLAA_SAANO_KOSHTHAK, "("},
 			{token.BAAKYA, "सोच्छौ के मेरो बारे?"},

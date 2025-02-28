@@ -1,10 +1,9 @@
 package lexer
 
 import (
+	"ga/token"
 	"unicode"
 	"unicode/utf8"
-
-	"ga/token"
 )
 
 type Lexer struct {
