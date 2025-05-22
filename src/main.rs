@@ -1,3 +1,5 @@
+mod utils;
+
 #[allow(dead_code)]
 #[derive(Debug)]
 enum TokenKind {
@@ -92,14 +94,14 @@ impl Lexer {
                 literal: "".to_string()
             },
             _ =>  {
-                if is_devanagari_letter(self.character) {
+                if utils::is_devanagari_letter(self.character) {
                     let identifier = self.read_identifier();
 
                     return Token {
                         kind: TokenKind::Identifier,
                         literal: identifier
                     };
-                } else if is_digit(self.character) {
+                } else if utils::is_digit(self.character) {
                     return Token {
                         kind: TokenKind::Number,
                         literal: self.read_number()
@@ -148,7 +150,7 @@ impl Lexer {
 
     fn read_identifier(&mut self) -> String {
         let position = self.position;
-        while is_devanagari_letter(self.character) || is_devanagari_vowel_sign(self.character) {
+        while utils::is_devanagari_letter(self.character) || utils::is_devanagari_vowel_sign(self.character) {
             self.read_char();
         }
 
@@ -157,24 +159,12 @@ impl Lexer {
 
     fn read_number(&mut self) -> String {
         let position = self.position;
-        while is_digit(self.character) {
+        while utils::is_digit(self.character) {
             self.read_char();
         }
 
         return self.input[position..self.position].iter().collect();
     }
-}
-
-fn is_devanagari_letter(ch: char) -> bool {
-    return ('\u{0900}' <= ch && ch <= '\u{097F}') || ('\u{A8E0}' <= ch && ch <= '\u{A8FF}');
-}
-
-fn is_devanagari_vowel_sign(ch: char) -> bool {
-    return '\u{093A}' <= ch && ch <= '\u{094F}';
-}
-
-fn is_digit(ch: char) -> bool {
-    return '\u{0966}' <= ch && ch <= '\u{096F}';
 }
 
 fn main() {
