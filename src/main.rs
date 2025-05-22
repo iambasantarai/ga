@@ -34,6 +34,7 @@ enum TokenKind {
     /* Keywords */
     Let,
     Function,
+    Print,
     Return,
     If,
     Else,
@@ -46,6 +47,26 @@ enum TokenKind {
 struct Token {
     kind: TokenKind,
     literal: String
+}
+
+// Maps Devanagari identifiers to their corresponding keyword token kinds
+#[allow(dead_code)]
+struct DevanagariIdentToTokenMap;
+
+impl DevanagariIdentToTokenMap {
+    fn lookup(identifier: &str) -> Option<TokenKind> {
+        match identifier {
+            "मानौ" => Some(TokenKind::Let),
+            "कार्य" => Some(TokenKind::Function),
+            "छाप" => Some(TokenKind::Print),
+            "यदि" => Some(TokenKind::If),
+            "नभए" => Some(TokenKind::Else),
+            "फिर्ता" => Some(TokenKind::Return),
+            "सत्य" => Some(TokenKind::True),
+            "असत्य" => Some(TokenKind::False),
+            _ => None,
+        }
+    }
 }
 
 struct Lexer {
@@ -97,8 +118,12 @@ impl Lexer {
                 if utils::is_devanagari_letter(self.character) {
                     let identifier = self.read_identifier();
 
+                    // Look up the identifier in the Devanagari keyword token map
+                    let kind = DevanagariIdentToTokenMap::lookup(&identifier)
+                        .unwrap_or(TokenKind::Identifier);
+
                     return Token {
-                        kind: TokenKind::Identifier,
+                        kind,
                         literal: identifier
                     };
                 } else if utils::is_digit(self.character) {
@@ -166,6 +191,7 @@ impl Lexer {
         return self.input[position..self.position].iter().collect();
     }
 }
+
 
 fn main() {
     let source = r#"कार्य मुख्य() {
