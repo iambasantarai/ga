@@ -1,16 +1,16 @@
+use std::{fs, path};
 mod token;
 mod lexer;
 mod utils;
 
 use token::TokenKind;
 use lexer::Lexer;
+use path::Path;
 
 fn main() {
-    let source = r#"कार्य मुख्य() {
-            छाप("सोच्छौ के मेरो बारे?")।
-            छाप(१२३)।
-        }
-        "#.to_string();
+    let file_path = Path::new("examples/init.ga");
+    let source = fs::read_to_string(file_path).expect("Can't read this file.");
+
     let mut lexer = Lexer::new(source);
 
     loop {
