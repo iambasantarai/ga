@@ -1,14 +1,20 @@
-use std::{fs, path};
+use std::{env, fs, process};
 mod token;
 mod lexer;
 mod utils;
 
 use token::TokenKind;
 use lexer::Lexer;
-use path::Path;
 
 fn main() {
-    let file_path = Path::new("examples/init.ga");
+    let args: Vec<String> = env::args().collect();
+
+    if args.len() < 2 {
+        eprintln!("Missing source file path argument.");
+        process::exit(1);
+    }
+
+    let file_path = &args[1];
     let source = fs::read_to_string(file_path).expect("Can't read this file.");
 
     let mut lexer = Lexer::new(source);
