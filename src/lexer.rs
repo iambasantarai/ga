@@ -48,22 +48,24 @@ impl Lexer {
             },
             _ =>  {
                 if utils::is_devanagari_letter(self.character) {
-                    let identifier = self.read_identifier();
+                    if utils::is_digit(self.character) {
+                        return Token {
+                            kind: TokenKind::Number,
+                            literal: self.read_number()
+                        };
+                    } else {
 
-                    // Look up the identifier in the Devanagari keyword token map
-                    let kind = DevanagariIdentToTokenMap::lookup(&identifier)
-                        .unwrap_or(TokenKind::Identifier);
+                        let identifier = self.read_identifier();
 
-                    return Token {
-                        kind,
-                        literal: identifier
-                    };
-                } else if utils::is_digit(self.character) {
-                    return Token {
-                        kind: TokenKind::Number,
-                        literal: self.read_number()
-                    };
+                        // Look up the identifier in the Devanagari keyword token map
+                        let kind = DevanagariIdentToTokenMap::lookup(&identifier)
+                            .unwrap_or(TokenKind::Identifier);
 
+                        return Token {
+                            kind,
+                            literal: identifier
+                        };
+                    }
                 } else {
                     self.create_token(TokenKind::Illegal)
                 }
