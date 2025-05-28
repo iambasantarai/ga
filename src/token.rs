@@ -13,6 +13,7 @@ pub enum TokenKind {
     CloseParen,
     OpenCurly,
     CloseCurly,
+    Terminator,
     
     /* -- Operators -- */
     Plus,               
@@ -62,6 +63,7 @@ impl DevanagariIdentToTokenMap {
             "फिर्ता" => Some(TokenKind::Return),
             "सत्य" => Some(TokenKind::True),
             "असत्य" => Some(TokenKind::False),
+            "।" => Some(TokenKind::Terminator),
             _ => None,
         }
     }
