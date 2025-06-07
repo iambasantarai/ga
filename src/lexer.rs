@@ -42,6 +42,13 @@ impl Lexer {
             '%' => self.create_token(TokenKind::Mod),
             '!' => self.create_token(TokenKind::Bang),
             '=' => self.create_token(TokenKind::Equal),
+            '"' => {
+                let literal = self.read_string();
+                return Token {
+                    kind: TokenKind::String,
+                    literal
+                }
+            }
             '\0' => Token {
                 kind: TokenKind::Eof,
                 literal: "".to_string()
@@ -123,5 +130,18 @@ impl Lexer {
         }
 
         return self.input[position..self.position].iter().collect();
+    }
+
+    fn read_string(&mut self)-> String {
+        self.read_char();
+        let mut literal = String::new();
+
+        while self.character != '\"' {
+            literal.push(self.character);
+            self.read_char();
+        }
+        self.read_char();
+
+        return  literal
     }
 }
