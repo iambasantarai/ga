@@ -6,3 +6,5 @@ A toy programming language in the [Devanagari](https://en.wikipedia.org/wiki/Dev
 
 - [मनसा](http://mnsa.cc/)
 - [वैदिक](https://vedic-lang.github.io/)
+- [Creating a Compiler](https://www.youtube.com/watch?v=KwpcOYKfXZc&list=PLzLzYGEbdY5n9ITKUqOuRjXkRU5tMW2Sd)
+- [StanfordOnline: Compilers](https://www.edx.org/learn/computer-science/stanford-university-compilers)
