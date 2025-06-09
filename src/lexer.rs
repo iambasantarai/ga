@@ -145,3 +145,62 @@ impl Lexer {
         return  literal
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_a_portion_of_source_code() {
+        let source = r#"कार्य काम() {
+                सन्देश = "सोच्छौ के मेरो बारे?"।
+                छाप(सन्देश)
+                छाप(१२३)
+            }
+            काम()
+        "#.to_string();
+
+        let mut lexer = Lexer::new(source);
+
+        let expected_tokens = vec![
+            Token { kind: TokenKind::Function, literal: "कार्य".to_string() },
+            Token { kind: TokenKind::Identifier, literal: "काम".to_string() },
+            Token { kind: TokenKind::OpenParen, literal: "(".to_string() },
+            Token { kind: TokenKind::CloseParen, literal: ")".to_string() },
+            Token { kind: TokenKind::OpenCurly, literal: "{".to_string() },
+            Token { kind: TokenKind::Identifier, literal: "सन्देश".to_string() },
+            Token { kind: TokenKind::Equal, literal: "=".to_string() },
+            Token { kind: TokenKind::String, literal: "सोच्छौ के मेरो बारे?".to_string() },
+            Token { kind: TokenKind::Terminator, literal: "।".to_string() },
+            Token { kind: TokenKind::Print, literal: "छाप".to_string() },
+            Token { kind: TokenKind::OpenParen, literal: "(".to_string() },
+            Token { kind: TokenKind::Identifier, literal: "सन्देश".to_string() },
+            Token { kind: TokenKind::CloseParen, literal: ")".to_string() },
+            Token { kind: TokenKind::Print, literal: "छाप".to_string() },
+            Token { kind: TokenKind::OpenParen, literal: "(".to_string() },
+            Token { kind: TokenKind::Number, literal: "१२३".to_string() },
+            Token { kind: TokenKind::CloseParen, literal: ")".to_string() },
+            Token { kind: TokenKind::CloseCurly, literal: "}".to_string() },
+            Token { kind: TokenKind::Identifier, literal: "काम".to_string() },
+            Token { kind: TokenKind::OpenParen, literal: "(".to_string() },
+            Token { kind: TokenKind::CloseParen, literal: ")".to_string() },
+            Token { kind: TokenKind::Eof, literal: "".to_string() },
+        ];
+
+        let mut index = 0;
+        loop {
+            let token = lexer.next_token();
+            let expected_token = &expected_tokens[index];
+
+            assert_eq!(token.kind, expected_token.kind, "Kind mismatch at token index {}", index);
+            assert_eq!(token.literal, expected_token.literal, "Literal mismatch at token index {}", index);
+
+            // If the token is Eof, stop the loop
+            if token.kind == TokenKind::Eof {
+                break;
+            }
+
+            index += 1;
+        }
+    }
+}

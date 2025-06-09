@@ -1,5 +1,5 @@
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(PartialEq, Debug)]
 pub enum TokenKind {
     Eof, 
     Illegal,
