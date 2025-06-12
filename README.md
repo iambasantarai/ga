@@ -22,5 +22,6 @@ Currently, only the lexer has been implemented for this language. If you're curi
 
 - [मनसा](http://mnsa.cc/)
 - [वैदिक](https://vedic-lang.github.io/)
+- [Crafting Interpreters](https://craftinginterpreters.com/)
 - [Creating a Compiler](https://www.youtube.com/watch?v=KwpcOYKfXZc&list=PLzLzYGEbdY5n9ITKUqOuRjXkRU5tMW2Sd)
 - [StanfordOnline: Compilers](https://www.edx.org/learn/computer-science/stanford-university-compilers)
