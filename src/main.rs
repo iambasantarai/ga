@@ -32,11 +32,11 @@ fn main() {
 
         match token.kind {
             TokenKind::Eof  => {
-                    println!("{:?}", token);
-                    break;
+                println!("Token: {:?}, literal: '{}' ", token.kind, token.literal);
+                break;
             },
             _ =>  {
-                println!("{:?}", token)
+                println!("Token: {:?}, literal: '{}' ", token.kind, token.literal);
             },
         }
     }
